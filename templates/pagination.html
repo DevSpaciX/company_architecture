@@ -1,0 +1,22 @@
+
+{% if employees.has_previous or employees.has_next %}
+<ul class="flex justify-center mt-4">
+    {% if employees.has_previous %}
+    <li class="mx-1 px-3 py-2 bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-gray-200 rounded-lg">
+        <a class="flex items-center font-bold" href="?page={{ employees.previous_page_number }}">
+            <span class="mx-1">previous</span>
+        </a>
+    </li>
+    {% endif %}
+    <li class="mx-1 px-3 py-2 bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-gray-200 rounded-lg">
+        <a class="font-bold">{{ employees.number }}</a>
+    </li>
+    {% if employees.has_next %}
+    <li class="mx-1 px-3 py-2 bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-gray-200 rounded-lg">
+        <a class="flex items-center font-bold" href="?page={{ employees.next_page_number }}">
+            <span class="mx-1">Next</span>
+        </a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}

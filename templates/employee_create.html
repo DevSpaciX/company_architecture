@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include "navbar.html" %}
+<div class="flex justify-center items-center min-h-screen">
+  <div class="w-full max-w-md">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-bold mb-4">{% if object %}Update{% else %}Create{% endif %} Employee</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label class="block text-gray-700 font-bold mb-2" for="{{ form.name.id_for_label }}">Name</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ form.name.id_for_label }}" type="{{ form.name.widget.input_type }}" name="{{ form.name.name }}" value="" >
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-bold mb-2" for="{{ form.position.id_for_label }}">Position</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ form.position.id_for_label }}" type="{{ form.position.widget.input_type }}" placeholder="{{ form.position.label }}" name="{{ form.position.name }}" value="{{ form.position.value }}">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-bold mb-2" for="{{ form.hire_date.id_for_label }}">Hire Date</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ form.hire_date.id_for_label }}" type="{{ form.hire_date.widget.input_type }}" placeholder="{{ form.hire_date.label }}" name="{{ form.hire_date.name }}" value="{{ form.hire_date.value }}">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-bold mb-2" for="{{ form.email.id_for_label }}">Email</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ form.email.id_for_label }}" type="{{ form.email.widget.input_type }}" placeholder="{{ form.email.label }}" name="{{ form.email.name }}" value="{{ form.email.value }}">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-bold mb-2" for="{{ form.parent.id_for_label }}">Boss</label>
+          <select class="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ form.parent.id_for_label }}" name="{{ form.parent.name }}">
+            {% if form.parent.value %}
+              <option value="{{ form.parent.value.pk }}">{{ employee.parent.name }}</option>
+            {% else %}
+              <option value="">Have no Boss</option>
+            {% endif %}
+            {% for choice in form.parent.field.choices %}
+              {% if choice.0 != form.instance.pk %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+    <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
