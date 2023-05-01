@@ -10,7 +10,8 @@
       <div class="space-y-4">
         {% recursetree employees %}
           <div class="flex items-center">
-            <div class="w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center mr-2">{{ node.name|slice:"1"|upper }}</div>
+            <div
+                class="w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center mr-2">{{ node.name|slice:"1"|upper }}</div>
             <div>
               <p class="text-lg font-medium text-gray-900">{{ node.name }}</p>
               <p class="text-gray-700">{{ node.position }}</p>

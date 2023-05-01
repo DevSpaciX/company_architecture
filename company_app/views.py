@@ -1,4 +1,3 @@
-
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -20,47 +19,45 @@ from django.views import generic, View
 
 class EmployeeCRUDMixin:
     model = Employee
-    fields = ['name', 'position', 'hire_date', 'email', 'parent']
-    success_url = reverse_lazy('employee-list')
+    fields = ["name", "position", "hire_date", "email", "parent"]
+    success_url = reverse_lazy("employee-list")
+
 
 class EmployeeCreateView(LoginRequiredMixin, EmployeeCRUDMixin, CreateView):
-    template_name = 'employee_update.html'
+    template_name = "employee_update.html"
 
 
 class EmployeeUpdateView(LoginRequiredMixin, EmployeeCRUDMixin, UpdateView):
-    template_name = 'employee_update.html'
-
-
-
+    template_name = "employee_update.html"
 
 
 class EmployeeTree(ListView):
-    template_name = 'employee_tree.html'
+    template_name = "employee_tree.html"
     queryset = Employee.objects.all()
     paginate_by = 13
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         paginator = Paginator(self.object_list, self.paginate_by)
-        page = self.request.GET.get('page')
+        page = self.request.GET.get("page")
         employees = paginator.get_page(page)
-        context['employees'] = employees
+        context["employees"] = employees
         return context
 
 
 class EmployeeListView(ListView):
     model = Employee
-    context_object_name = 'employees'
-    template_name = 'employee_list.html'
+    context_object_name = "employees"
+    template_name = "employee_list.html"
     paginate_by = 15
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter"] = EmployeeFilter(self.request.GET)
         paginator = Paginator(self.object_list, self.paginate_by)
-        page = self.request.GET.get('page')
+        page = self.request.GET.get("page")
         employees = paginator.get_page(page)
-        context['employees'] = employees
+        context["employees"] = employees
         return context
 
     def get_queryset(self):
@@ -68,12 +65,12 @@ class EmployeeListView(ListView):
         filter = EmployeeFilter(self.request.GET, queryset=queryset)
         return filter.qs.distinct()
 
+
 @login_required
 def delete_employee(request, pk):
     employee = Employee.objects.get(pk=pk)
     employee.delete()
-    return JsonResponse({'status': 'ok'})
-
+    return JsonResponse({"status": "ok"})
 
 
 class SignUpView(View):
