@@ -49,15 +49,10 @@ class EmployeeListView(ListView):
     model = Employee
     context_object_name = "employees"
     template_name = "employee_list.html"
-    paginate_by = 15
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter"] = EmployeeFilter(self.request.GET)
-        paginator = Paginator(self.object_list, self.paginate_by)
-        page = self.request.GET.get("page")
-        employees = paginator.get_page(page)
-        context["employees"] = employees
         return context
 
     def get_queryset(self):
